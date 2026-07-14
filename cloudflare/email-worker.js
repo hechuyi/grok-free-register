@@ -31,6 +31,21 @@ function trim(s, max = 20000) {
 
 export default {
   async email(message, env, ctx) {
+    const recipient = String(message.to || "").trim().toLowerCase();
+    const grokDomain = String(env.GROK_EMAIL_DOMAIN || "").trim().toLowerCase();
+    const fallbackForwardTo = String(env.FALLBACK_FORWARD_TO || "").trim();
+
+    if (!grokDomain || !fallbackForwardTo) {
+      console.error("GROK_EMAIL_DOMAIN/FALLBACK_FORWARD_TO 未配置");
+      return;
+    }
+
+    if (!recipient.endsWith(`@${grokDomain}`)) {
+      await message.forward(fallbackForwardTo);
+      console.log("fallback forward -> ok");
+      return;
+    }
+
     if (!env.WEBHOOK_URL) {
       console.error("WEBHOOK_URL 未配置 (npx wrangler secret put WEBHOOK_URL)");
       return;
