@@ -19,6 +19,7 @@ bash start.sh
 - [注册教程](docs/guides/registration.md)
 - [本地认证服务](docs/guides/auth-service.md)
 - [凭据库存与取用](docs/guides/credential-inventory.md)
+- [本地运维与 Cloudflare 集成总结](docs/guides/local-ops-integration.md)
 - [运行状态与排障](docs/guides/runtime-troubleshooting.md)
 
 常用命令：
